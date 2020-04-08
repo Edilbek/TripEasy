@@ -1,18 +1,60 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, Index, ManyToOne,JoinColumn} from "typeorm";
+import {Car} from "./Car";
+import * as bcrypt from "bcryptjs";
 
-@Entity()
+@Entity({name:"users"})
 export class User {
 
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    firstName: string;
+    @Column({
+        nullable: false,
+        length:50
+    })
+    @Index({ unique: true })
+    email: string;
 
-    @Column()
-    lastName: string;
+    @Column({
+        nullable: false,
+        length:100
+    })
+    password: string;
 
-    @Column()
-    age: number;
+    @Column({
+        length: 100,
+        nullable: false
+    })
+    name: string;
+
+    @Column({length: 100,nullable: false})
+    surname: string;
+
+    @Column({length: 10, nullable: false})
+    gender: string;
+
+    @Column("date", {nullable: false})
+    date_of_Birth: Date;
+
+    @Index({ unique: true })
+    @Column({nullable: false, length:50})
+    phone: string;
+
+    @Column("text")
+    inf_about_yourself: string;
+
+    @ManyToOne(type => Car, Car => Car.id, {
+        nullable: false,
+        cascade: true
+    })
+    @JoinColumn()
+    car: Car;
+
+    hashPassword() {
+        this.password = bcrypt.hashSync(this.password, 8);
+    }
+    checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
+        return bcrypt.compareSync(unencryptedPassword, this.password);
+    }
 
 }
