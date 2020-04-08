@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne} from "typeorm";
 import {User} from "./User";
 
 enum Status {
@@ -24,4 +24,7 @@ export class Preference {
 
   @Column()
   music: Status;
+
+  @OneToOne(() => User, (user: User) => user.preference)
+  user: User;
 }

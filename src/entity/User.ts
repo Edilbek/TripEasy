@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, Index, ManyToOne, JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, Index, ManyToOne, JoinColumn, OneToOne} from "typeorm";
 import {Car} from "./Car";
 import {Preference} from "./Preference";
 import * as bcrypt from "bcryptjs";
@@ -56,9 +56,9 @@ export class User {
     @JoinColumn()
     car: Car;
 
-    @ManyToOne(type => Preference, Preference => Preference.id, {
-        nullable: false,
-        cascade: true
+    @OneToOne(() => Preference, (preference: Preference) => preference.user, {
+      cascade: true,
+      eager: true
     })
     @JoinColumn()
     preference: Preference;

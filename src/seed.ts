@@ -13,12 +13,12 @@ createConnection().then(async connection => {
     let car = new Car();
     let user = new User();
     let city = new City();
-    let city1 = new City();
-    let city2 = new City();
+    // let city1 = new City();
+    // let city2 = new City();
     let preference = new Preference();
-    let passenger = new Passenger();
-    let trip = new Trip();
-    let point = new IntermediatePoint();
+    // let passenger = new Passenger();
+    // let trip = new Trip();
+    // let point = new IntermediatePoint();
 
     car.car_model = "Mercedes-AMG G 63";
     car.country = "Germany";
@@ -44,18 +44,18 @@ createConnection().then(async connection => {
     city1.name = "Osh";
     city2.name = "Naryn";
 
-    trip.point_of_shipment = city;
-    trip.destination = city1;
-    trip.date_time = new Date();
-    trip.price = 1350;
-    trip.amount_of_seats = 6;
-    trip.free_seats = 3;
-
-    passenger.user = user;
-    passenger.trip = trip;
-
-    point.trip = trip;
-    point.points = city2;
+    // trip.point_of_shipment = city;
+    // trip.destination = city1;
+    // trip.date_time = new Date();
+    // trip.price = 1350;
+    // trip.amount_of_seats = 6;
+    // trip.free_seats = 3;
+    //
+    // passenger.user = user;
+    // passenger.trip = trip;
+    //
+    // point.trip = trip;
+    // point.points = city2;
 
     await connection.manager.save(car);
     console.log("Car has been saved");
@@ -69,13 +69,13 @@ createConnection().then(async connection => {
     await connection.manager.save(preference);
     console.log("Preference has been saved");
 
-    await connection.manager.save(trip);
-    console.log("Trip has been saved");
-
-    await connection.manager.save(passenger);
-    console.log("Passenger has been saved");
-
-    await connection.manager.save(point);
-    console.log("Intermediate Point has been saved");
+    // await connection.manager.save(trip);
+    // console.log("Trip has been saved");
+    //
+    // await connection.manager.save(passenger);
+    // console.log("Passenger has been saved");
+    //
+    // await connection.manager.save(point);
+    // console.log("Intermediate Point has been saved");
 
 }).catch(error => console.log(error));
