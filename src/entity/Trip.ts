@@ -1,11 +1,19 @@
 import {Entity, PrimaryGeneratedColumn, Column, Index, ManyToOne, JoinColumn} from "typeorm";
 import {City} from "./City";
+import {User} from "./User";
 
 @Entity()
 export class Trip {
 
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(type => User, user => user.id, {
+    nullable: false,
+    cascade: true
+  })
+  @JoinColumn()
+  driver: User;
 
   @ManyToOne(type => City, City => City.id, {
       nullable: false,
