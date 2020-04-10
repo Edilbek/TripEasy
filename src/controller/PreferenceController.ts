@@ -21,6 +21,7 @@ export class PreferenceController {
     async remove(request: Request, response: Response, next: NextFunction) {
         let carToRemove = await this.preferenceRepository.findOne(request.params.id);
         await this.preferenceRepository.remove(carToRemove);
+        return "Preference deleted successfully";
     }
 
 }

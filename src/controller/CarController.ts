@@ -21,6 +21,7 @@ export class CarController {
     async remove(request: Request, response: Response, next: NextFunction) {
         let carToRemove = await this.carRepository.findOne(request.params.id);
         await this.carRepository.remove(carToRemove);
+        return "Car deleted successfully";
     }
 
 }
