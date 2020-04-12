@@ -5,7 +5,7 @@ import * as bcrypt from "bcryptjs";
 
 enum Gender {
   male,
-  femal
+  female
 }
 
 @Entity({name:"users"})

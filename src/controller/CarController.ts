@@ -4,24 +4,57 @@ import {Car} from "../entity/Car";
 
 export class CarController {
 
-    private carRepository = getRepository(Car);
+    static all = async (req: Request, res: Response, next: NextFunction) => {
+        //Get cars from database
+        const carRepository = getRepository(Car);
+        const cars = await carRepository.find();
+        //Send the cars object
+        res.send(cars);
+    };
 
-    async all(request: Request, response: Response, next: NextFunction) {
-        return this.carRepository.find();
+    static one = async (req: Request, res: Response, next: NextFunction) => {
+        const carRepository = getRepository(Car);
+        try {
+            const car = await carRepository.findOneOrFail(req.params.id);
+            res.send(car);
+        } catch (error) {
+            res.status(404).send("Car not found");
+        }
+    }
+    static save = async (req: Request, res: Response, next: NextFunction) => {
+        const carRepository = getRepository(Car);
+        let {car_model, country, car_number} = req.body;
+        let car = new Car();
+
+        car.car_model = car_model;
+        car.country = country;
+        car.car_number = car_number;
+
+        // Try to save.
+        try {
+            await carRepository.save(car);
+        } catch (error) {
+            res.status(409).send("Check fields");
+            return;
+        }
+
+        // If all ok, send 201 response
+        res.status(201).send(car);
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
-        return this.carRepository.findOne(request.params.id);
-    }
+    static remove = async (req: Request, res: Response, next: NextFunction) => {
+        const carRepository = getRepository(Car);
+        let carToRemove = await carRepository.findOne(req.params.id);
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        return this.carRepository.save(request.body);
-    }
+        try {
+            await carRepository.remove(carToRemove);
+        } catch (error) {
+            res.status(404).send("Car not found");
+            return;
+        }
 
-    async remove(request: Request, response: Response, next: NextFunction) {
-        let carToRemove = await this.carRepository.findOne(request.params.id);
-        await this.carRepository.remove(carToRemove);
-        return "Car deleted successfully";
+        // After all send a 201 response
+        res.status(201).send("Car deleted");
     }
 
 }

@@ -1,23 +1,11 @@
 import {PreferenceController} from "../controller/PreferenceController";
+import {Router} from "express";
 
-export const preferenceRoutes = [{
-    method: "get",
-    route: "/preferences",
-    controller: PreferenceController,
-    action: "all"
-}, {
-    method: "get",
-    route: "/preferences/:id",
-    controller: PreferenceController,
-    action: "one"
-}, {
-    method: "post",
-    route: "/preferences",
-    controller: PreferenceController,
-    action: "save"
-}, {
-    method: "delete",
-    route: "/preferences/:id",
-    controller: PreferenceController,
-    action: "remove"
-}];
+const router = Router();
+
+router.get("/", PreferenceController.all);
+router.get("/:id", PreferenceController.one)
+router.post("/", PreferenceController.save);
+router.post("/:id", PreferenceController.remove);
+
+export default router;
