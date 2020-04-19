@@ -16,11 +16,12 @@ export class Trip {
   @JoinColumn()
   driver: User;
 
-  @ManyToOne(type => IntermediatePoint, IntermediatePoint => IntermediatePoint.id, {
+  @ManyToOne(type => City, City => City.id, {
+      nullable: false,
       cascade: true
   })
   @JoinColumn()
-  point_of_shipment: IntermediatePoint;
+  point_of_shipment: City;
 
   @ManyToOne(type => City, City => City.id, {
       nullable: false,
@@ -40,4 +41,5 @@ export class Trip {
 
   @Column()
   free_seats: number;
+
 }
