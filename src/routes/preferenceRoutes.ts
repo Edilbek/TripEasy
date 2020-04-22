@@ -6,6 +6,6 @@ const router = Router();
 router.get("/", PreferenceController.all);
 router.get("/:id", PreferenceController.one)
 router.post("/", PreferenceController.save);
-router.post("/:id", PreferenceController.remove);
+router.delete("/:id", PreferenceController.remove);
 
 export default router;

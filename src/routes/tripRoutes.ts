@@ -6,6 +6,6 @@ const router = Router();
 router.get("/", TripController.all);
 router.get("/:id", TripController.one)
 router.post("/", TripController.save);
-router.post("/:id", TripController.remove);
+router.delete("/:id", TripController.remove);
 
 export default router;
