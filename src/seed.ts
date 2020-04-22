@@ -13,8 +13,6 @@ createConnection().then(async connection => {
     let car = new Car();
     let user = new User();
     let city = new City();
-    // let city1 = new City();
-    // let city2 = new City();
     let preference = new Preference();
     // let passenger = new Passenger();
     // let trip = new Trip();
@@ -41,8 +39,6 @@ createConnection().then(async connection => {
     user.preference = preference;
 
     city.name = "Bishkek";
-    city1.name = "Osh";
-    city2.name = "Naryn";
 
     // trip.point_of_shipment = city;
     // trip.destination = city1;
