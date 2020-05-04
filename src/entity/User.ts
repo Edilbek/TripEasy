@@ -4,8 +4,8 @@ import {Preference} from "./Preference";
 import * as bcrypt from "bcryptjs";
 
 enum Gender {
-  male,
-  female
+  male = "Male",
+  female = "Female"
 }
 
 @Entity({name:"users"})
