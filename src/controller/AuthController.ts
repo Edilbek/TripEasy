@@ -42,6 +42,10 @@ class AuthController {
         res.send(token);
     };
 
+    static logout = async (req: Request, res: Response) => {
+        res.status(200).send("User logout successfully");
+    }
+
     static changePassword = async (req: Request, res: Response) => {
         // Get ID from JWT
         const id = res.locals.jwtPayload.userId;
