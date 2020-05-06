@@ -50,8 +50,8 @@ export class User {
     inf_about_yourself: string;
 
     @ManyToOne(type => Car, Car => Car.id, {
-        nullable: false,
-        cascade: true
+      cascade: true,
+      eager: true
     })
     @JoinColumn()
     car: Car;
