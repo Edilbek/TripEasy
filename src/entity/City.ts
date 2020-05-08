@@ -9,4 +9,7 @@ export class City {
 
   @Column({length:70})
   name: string;
+
+  @Column({length:70})
+  attribute: string;
 }

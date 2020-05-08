@@ -23,10 +23,11 @@ export class CityController {
     }
     static save = async (req: Request, res: Response, next: NextFunction) => {
         const cityRepository = getRepository(City);
-        let {name} = req.body;
+        let {name, attribute} = req.body;
         let city = new City();
 
         city.name = name;
+        city.attribute = attribute;
 
         // Try to save.
         try {
