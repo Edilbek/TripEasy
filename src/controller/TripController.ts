@@ -1,7 +1,7 @@
 import {getRepository} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {Trip} from "../entity/Trip";
-// import {IntermediatePoint} from "../entity/IntermediatePoint";
+import {IntermediatePoint} from "../entity/IntermediatePoint";
 
 export class TripController {
 
@@ -24,11 +24,11 @@ export class TripController {
     }
     static save = async (req: Request, res: Response, next: NextFunction) => {
         const tripRepository = getRepository(Trip);
-        // const pointRepository = getRepository(IntermediatePoint);
+        const pointRepository = getRepository(IntermediatePoint);
 
-        let {driver, point_of_shipment, destination, date_time, price, amount_of_seats, free_seats} = req.body;
+        let {driver, point_of_shipment, destination, date_time, price, amount_of_seats, free_seats, waypoints} = req.body;
         let trip = new Trip();
-        // let intermediate_point = new IntermediatePoint();
+        let intermediate_point = new IntermediatePoint();
 
         trip.driver = driver;
         trip.point_of_shipment = point_of_shipment;
@@ -37,14 +37,17 @@ export class TripController {
         trip.price = price;
         trip.amount_of_seats = amount_of_seats;
         trip.free_seats = free_seats;
+        trip.waypoints = waypoints
 
-        // intermediate_point.trip = trip;
-        // intermediate_point.points = destination;
+        for (let i = 0; i < waypoints.length; i++) {
+            intermediate_point.trip = trip;
+            intermediate_point.points = waypoints[i];
 
+            await pointRepository.save(intermediate_point)
+        }
         // Try to save.
         try {
             await tripRepository.save(trip);
-            // await pointRepository.save(intermediate_point);
         } catch (error) {
             res.status(409).send("Check fields");
             return;

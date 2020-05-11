@@ -23,6 +23,9 @@ export class Trip {
   @JoinColumn()
   point_of_shipment: City;
 
+  @Column("int", { array: true })
+  waypoints: number[];
+
   @ManyToOne(type => City, City => City.id, {
       nullable: false,
       cascade: true
