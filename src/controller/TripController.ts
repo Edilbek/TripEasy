@@ -28,7 +28,6 @@ export class TripController {
 
         let {driver, point_of_shipment, destination, date_time, price, amount_of_seats, free_seats, waypoints} = req.body;
         let trip = new Trip();
-        let intermediate_point = new IntermediatePoint();
 
         trip.driver = driver;
         trip.point_of_shipment = point_of_shipment;
@@ -39,12 +38,18 @@ export class TripController {
         trip.free_seats = free_seats;
         trip.waypoints = waypoints
 
+        let points = []
         for (let i = 0; i < waypoints.length; i++) {
-            intermediate_point.trip = trip;
-            intermediate_point.points = waypoints[i];
+          const intermediate_point = { trip: {}, points: 0 };
+          intermediate_point.trip = trip;
 
-            await pointRepository.save(intermediate_point)
+          intermediate_point.points = waypoints[i];
+
+          points.push(intermediate_point);
         }
+
+        await pointRepository.save(points);
+
         // Try to save.
         try {
             await tripRepository.save(trip);
