@@ -39,6 +39,9 @@ export class Trip {
   @Column("date", {nullable: false})
   date_time: Date;
 
+  @Column("time", { nullable: false })
+  time: string;
+
   @Column("float")
   price: number;
 
