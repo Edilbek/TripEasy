@@ -12,7 +12,17 @@ export class TripController {
         //Send the trips object
         res.send(trips);
     };
-
+    
+    static myTrips = async (req: Request, res: Response, next: NextFunction) => {
+        //Get My trips from database
+        const driverId = req.body.driver;
+        
+        const tripRepository = getRepository(Trip);
+        const myTrips = await tripRepository.find({ where: { driver: driverId} });
+        //Send the myTrips object
+        res.send(myTrips);
+    };
+    
     static one = async (req: Request, res: Response, next: NextFunction) => {
         const tripRepository = getRepository(Trip);
         try {
